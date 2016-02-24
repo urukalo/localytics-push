@@ -1,0 +1,20 @@
+{
+  "name": "urukalo/localytics-push",
+  "description": "Localytics Push message sender",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Milan Urukalo",
+      "email": "urukalo@gmail.com"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "6.1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "LocalyticsPush\\": "src/"
+    }
+  }
+}
