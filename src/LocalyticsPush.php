@@ -27,7 +27,7 @@ class LocalyticsPush
      * @param array $message
      * @return bool|mixed|\Psr\Http\Message\ResponseInterface
      */
-    public function send($campaignName, $message = [])
+    public function send($campaignName, $message = [], $op = 'or')
     {
         $data = [
             "request_id" => str_random(),
@@ -36,12 +36,13 @@ class LocalyticsPush
             "messages" => [
                 array_merge(
                     ["target" => [
-                        "profile" => [
-                            "criteria" => $this->criteria,
-                            "op" => "or"
-                        ]]], $message)
+                        "profile" =>
+                            $this->makeCriteria($op)
+                    ]], $message)
             ]
         ];
+
+        //echo '<pre>' . json_encode($data); dd();
 
         try {
             return $this->client->request('POST', $this->app_key, ['json' => $data]);
@@ -50,11 +51,29 @@ class LocalyticsPush
         }
     }
 
-    public function equalTo($key, $values, $type = "string")
+    private function makeCriteria($op)
+    {
+
+        return ["criteria" => $this->criteria, 'op' => $op];
+    }
+
+    public function equalTo($key, $values, $type = "int", $scope = "LocalyticsApplication")
     {
 
         $this->criteria[] = ["key" => $key,
-            "scope" => "LocalyticsApplication",
+            "scope" => $scope,
+            "type" => $type,
+            "op" => "in",
+            "values" => $values
+        ];
+
+    }
+
+    public function containedIn($key, $values, $type = "string", $scope = "LocalyticsApplication")
+    {
+
+        $this->criteria[] = ["key" => $key,
+            "scope" => $scope,
             "type" => $type,
             "op" => "in",
             "values" => [
