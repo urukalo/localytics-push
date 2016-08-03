@@ -16,9 +16,11 @@ class LocalyticsPush
     {
         $this->app_key = $app_key;
 
-        $this->client = new Client(['base_uri' => 'https://messaging.localytics.com/v2/push/',
+        $this->client = new Client([
+            'base_uri' => 'https://messaging.localytics.com/v2/push/',
             'auth' => [$api_key, $api_sec],
-            'debug' => false]);
+            'debug' => false
+        ]);
     }
 
 
@@ -35,10 +37,12 @@ class LocalyticsPush
             "target_type" => "profile",
             "messages" => [
                 array_merge(
-                    ["target" => [
-                        "profile" =>
-                            $this->makeCriteria($op)
-                    ]], $message)
+                    [
+                        "target" => [
+                            "profile" =>
+                                $this->makeCriteria($op)
+                        ]
+                    ], $message)
             ]
         ];
 
@@ -60,7 +64,8 @@ class LocalyticsPush
     public function equalTo($key, $values, $type = "int", $scope = "LocalyticsApplication")
     {
 
-        $this->criteria[] = ["key" => $key,
+        $this->criteria[] = [
+            "key" => $key,
             "scope" => $scope,
             "type" => $type,
             "op" => "in",
@@ -72,10 +77,26 @@ class LocalyticsPush
     public function containedIn($key, $values, $type = "string", $scope = "LocalyticsApplication")
     {
 
-        $this->criteria[] = ["key" => $key,
+        $this->criteria[] = [
+            "key" => $key,
             "scope" => $scope,
             "type" => $type,
             "op" => "in",
+            "values" => [
+                $values
+            ]
+        ];
+
+    }
+
+    public function notContainedIn($key, $values, $type = "string", $scope = "LocalyticsApplication")
+    {
+
+        $this->criteria[] = [
+            "key" => $key,
+            "scope" => $scope,
+            "type" => $type,
+            "op" => "not_in",
             "values" => [
                 $values
             ]
