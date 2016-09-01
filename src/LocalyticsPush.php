@@ -103,4 +103,18 @@ class LocalyticsPush
         ];
 
     }
+
+    public function addCriteria($op, $key, $values, $type = "int", $scope = "LocalyticsApplication")
+    {
+
+        $this->criteria[] = [
+            "key" => $key,
+            "scope" => $scope,
+            "type" => $type,
+            "op" => $op,
+            "values" => $values
+        ];
+
+    }
+
 }
