@@ -48,7 +48,7 @@ class LocalyticsPush
         //echo '<pre>' . json_encode($data); dd();
 
         try {
-            return $this->client->request('POST', $this->app_key, ['json' => $data]);
+            return $this->client->request('POST', $this->app_key, ['json' => $data])->getStatusCode();
         } catch (ClientException $e) {
             return $e->getMessage();
         }
@@ -79,7 +79,7 @@ class LocalyticsPush
         //echo '<pre>' . json_encode($data); dd();
 
         try {
-            return $this->client->request('POST', $this->app_key, ['json' => $data]);
+            return $this->client->request('POST', $this->app_key, ['json' => $data])->getStatusCode();
         } catch (ClientException $e) {
             return $e->getMessage();
         }
