@@ -25,11 +25,41 @@ class LocalyticsPush
 
 
     /**
+     * @param array $message
+     * @return bool|mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function send($message = [], $op = 'or')
+    {
+        $data = [
+            "request_id" => str_random(),
+           // "campaign_key" => $campaignName,
+            "target_type" => "profile",
+            "messages" => [
+                array_merge(
+                    [
+                        "target" => [
+                            "profile" =>
+                                $this->makeCriteria($op)
+                        ]
+                    ], $message)
+            ]
+        ];
+
+        //echo '<pre>' . json_encode($data); dd();
+
+        try {
+            return $this->client->request('POST', $this->app_key, ['json' => $data]);
+        } catch (ClientException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    /**
      * @param $campaignName
      * @param array $message
      * @return bool|mixed|\Psr\Http\Message\ResponseInterface
      */
-    public function send($campaignName, $message = [], $op = 'or')
+    public function createCampaign($campaignName, $message = [], $op = 'or')
     {
         $data = [
             "request_id" => str_random(),
