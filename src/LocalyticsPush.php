@@ -119,6 +119,18 @@ class LocalyticsPush
 
     }
 
+    public function isNull($key, $type = "string", $scope = "LocalyticsApplication")
+    {
+
+        $this->criteria[] = [
+            "key" => $key,
+            "scope" => $scope,
+            "type" => $type,
+            "op" => "is_null"
+        ];
+
+    }
+
     public function notContainedIn($key, $values, $type = "string", $scope = "LocalyticsApplication")
     {
 
