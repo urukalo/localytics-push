@@ -12,10 +12,13 @@ there is one example to send iOS badge:
             "device" => ["ios" => ["badge" => 1]]
         ];
 
-        $query = new LocalyticsPush(config('localytics.api_key'), config('localytics.api_sec'),
-            config('localytics.app_key'));
+        $query = new LocalyticsPush(
+            config('localytics.api_key'), 
+            config('localytics.api_sec'),
+            config('localytics.app_key')
+            );
 
-        $query->equalTo('push_enabled', 1); //there is containedIn and notContainedIn criterias too, for now
+        $query->equalTo('push_enabled', 1); //lookup for more criterias
 
         $query->send(str_slug('catalog-badge-brand-' . $catalogName), $data, "and");
 ```
@@ -27,8 +30,8 @@ there is one example to send iOS badge:
 next to to:
   - make code more abstract 
   - cover more criteria
-  - `do sam tests u lazy ***!` :angry:
+  - `do some tests U lazy ***!` :angry:
 
 contributors:
-  - @urukalo
-  - You?
+  - [urukalo](https://github.com/urukalo)
+  - [You?](https://github.com/urukalo/localytics-push#fork-destination-box) (_just fork/change/make pull req_ )

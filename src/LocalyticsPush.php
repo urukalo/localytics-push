@@ -32,7 +32,6 @@ class LocalyticsPush
     {
         $data = [
             "request_id" => str_random(),
-            // "campaign_key" => $campaignName,
             "target_type" => "profile",
             "messages" => [
                 array_merge(
@@ -79,9 +78,9 @@ class LocalyticsPush
         //echo '<pre>' . json_encode($data); dd();
 
         try {
-            return $this->client->request('POST', $this->app_key, ['json' => $data])->getStatusCode();
+            return ['data' => $data, 'status' => $this->client->request('POST', $this->app_key, ['json' => $data])->getStatusCode()];
         } catch (ClientException $e) {
-            return $e->getMessage();
+            return ['data' => $data, 'status' => $e->getMessage()];
         }
     }
 
